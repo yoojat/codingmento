@@ -1,31 +1,16 @@
-import type { Route } from "./+types/home-page";
-
-export function loader({ request }: Route["LoaderArgs"]) {
-  return {
-    title: "Welcome to CodingMento",
-  };
-}
-
-export function action({ request }: Route["ActionArgs"]) {
-  return {
-    status: 200,
-  };
-}
-
-export function meta({ data }: Route["MetaFunction"]) {
-  return [
-    { title: data.title },
-    { name: "description", content: "Your coding mentorship platform" },
-  ];
-}
-
-export default function HomePage({ loaderData }: Route["ComponentProps"]) {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-4">Welcome to CodingMento</h1>
-      <p className="text-lg text-muted-foreground">
-        Your platform for coding mentorship and learning.
-      </p>
-    </div>
-  );
-} 
+import { Button } from "~/common/components/ui/button";
+ 
+ export default function HomePage() {
+   return (
+     <main className="container mx-auto px-4 py-8">
+       <h1 className="text-4xl font-bold mb-6">Welcome to Our App</h1>
+       <p className="text-lg mb-8">
+         Get started by exploring our features or sign in to your account.
+       </p>
+       <div className="flex gap-4">
+         <Button variant="default">Get Started</Button>
+         <Button variant="outline">Learn More</Button>
+       </div>
+     </main>
+   );
+ }
