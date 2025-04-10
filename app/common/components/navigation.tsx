@@ -44,7 +44,7 @@ const menus = [
       {
         name: "고등 파이썬",
         description: "파이썬 게임 만들기, 파이썬 고급 문법, 알고리즘 문제 풀이",
-        to: "/courses/python-intermeidate",
+        to: "/courses/python-intermediate",
       },
       {
         name: "데이터 분석 및 머신러닝",
