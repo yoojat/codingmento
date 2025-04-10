@@ -19,6 +19,12 @@ export default [
       "features/courses/pages/data-analysis-and-machine-learning-page.tsx"
     ),
   ]),
+  route("about", "features/about/pages/about-page.tsx"),
+  route("register", "features/register/pages/register-page.tsx"),
+  route("experience", "features/experience/pages/experience-page.tsx"),
+  route("reviews", "features/reviews/pages/reviews-page.tsx"),
+  route("free-trial", "features/free-trial/pages/free-trial-page.tsx"),
+
   ...prefix("products", [
     index("features/products/pages/products-page.tsx"),
     ...prefix("leaderboards", [
@@ -38,6 +44,10 @@ export default [
       route(
         "/weekly/:year/:week",
         "features/products/pages/weekly-leaderboard-page.tsx"
+      ),
+      route(
+        "/:period",
+        "features/products/pages/leaderboards-redirection-page.tsx"
       ),
     ]),
     ...prefix("categories", [

@@ -56,79 +56,18 @@ const menus = [
   {
     name: "코딩멘토 소개",
     to: "/about",
-    // items: [
-    //   {
-    //     name: "Remote Jobs",
-    //     description: "Find a remote job in our community",
-    //     to: "/jobs?location=remote",
-    //   },
-    //   {
-    //     name: "Full-Time Jobs",
-    //     description: "Find a full-time job in our community",
-    //     to: "/jobs?type=full-time",
-    //   },
-    //   {
-    //     name: "Freelance Jobs",
-    //     description: "Find a freelance job in our community",
-    //     to: "/jobs?type=freelance",
-    //   },
-    //   {
-    //     name: "Internships",
-    //     description: "Find an internship in our community",
-    //     to: "/jobs?type=internship",
-    //   },
-    //   {
-    //     name: "Submit a Job",
-    //     description: "Submit a job to our community",
-    //     to: "/jobs/submit",
-    //   },
-    // ],
-  },
-  {
-    name: "수강신청",
-    to: "/register",
-    // items: [
-    //   {
-    //     name: "All Posts",
-    //     description: "See all posts in our community",
-    //     to: "/community",
-    //   },
-    //   {
-    //     name: "Top Posts",
-    //     description: "See the top posts in our community",
-    //     to: "/community?sort=top",
-    //   },
-    //   {
-    //     name: "New Posts",
-    //     description: "See the new posts in our community",
-    //     to: "/community?sort=new",
-    //   },
-    //   {
-    //     name: "Create a Post",
-    //     description: "Create a post in our community",
-    //     to: "/community/create",
-    //   },
-    // ],
-  },
-  {
-    name: "무료체험",
-    to: "/free-trial",
   },
   {
     name: "수강후기",
     to: "/reviews",
-    // items: [
-    //   {
-    //     name: "All Teams",
-    //     description: "See all teams in our community",
-    //     to: "/teams",
-    //   },
-    //   {
-    //     name: "Create a Team",
-    //     description: "Create a team in our community",
-    //     to: "/teams/create",
-    //   },
-    // ],
+  },
+  {
+    name: "수강신청",
+    to: "/register",
+  },
+  {
+    name: "무료체험",
+    to: "/free-trial",
   },
 ];
 
