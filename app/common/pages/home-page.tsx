@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, type MetaFunction } from "react-router";
-import { ProductCard } from "../components/product-card";
+import { ProductCard } from "../../features/products/components/product-card";
 import { Button } from "../components/ui/button";
 import { PostCard } from "../components/post-card";
 import { IdeaCard } from "../components/idea-card";

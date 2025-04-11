@@ -5,11 +5,25 @@ import { Hero } from "~/common/components/hero";
 import { Button } from "~/common/components/ui/button";
 import ProductPagination from "~/common/components/product-pagination";
 import type { Route } from "./+types/yearly-leaderboard-page";
-import { ProductCard } from "~/common/components/product-card";
+import { ProductCard } from "~/features/products/components/product-card";
 
 const paramsSchema = z.object({
   year: z.coerce.number(),
 });
+export const meta: Route.MetaFunction = ({ params }) => {
+  const date = DateTime.fromObject({
+    year: Number(params.year),
+  })
+    .setZone("Asia/Seoul")
+    .setLocale("ko");
+  return [
+    {
+      title: `Best of ${date.toLocaleString({
+        year: "numeric",
+      })} | wemake`,
+    },
+  ];
+};
 
 export const loader = ({ params }: Route.LoaderArgs) => {
   const { success, data: parsedData } = paramsSchema.safeParse(params);
