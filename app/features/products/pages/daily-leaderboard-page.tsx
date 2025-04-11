@@ -1,36 +1,134 @@
-import type { Route } from "../../../+types/features/products/pages/daily-leaderboard-page";
-import type { MetaFunction } from "@react-router/types";
+import { DateTime } from "luxon";
+import { data, isRouteErrorResponse, Link } from "react-router";
+import { z } from "zod";
+import type { Route } from "./+types/leaderboard-page";
+import ProductPagination from "~/common/components/product-pagination";
+import { ProductCard } from "~/common/components/product-card";
+import { Button } from "~/common/components/ui/button";
+import { Hero } from "~/common/components/hero";
 
-export function meta({ params }: Route.MetaArgs): MetaFunction {
-  return [
-    {
-      title: `${params.month}/${params.day}/${params.year} Leaderboard | ProductHunt Clone`,
-    },
-    {
-      name: "description",
-      content: `Top products of ${params.month}/${params.day}/${params.year}`,
-    },
-  ];
-}
+const paramsSchema = z.object({
+  year: z.coerce.number().optional(),
+  month: z.coerce.number().optional(),
+  day: z.coerce.number().optional(),
+});
 
-export function loader({ params }: Route.LoaderArgs) {
+export const loader = ({ params }: Route.LoaderArgs) => {
+  const { success, data: parsedData } = paramsSchema.safeParse(params);
+  if (!success) {
+    throw data(
+      {
+        error_code: "invalid_params",
+        message: "Invalid params",
+      },
+      { status: 400 }
+    );
+  }
+
+  // 현재 날짜를 기본값으로 사용
+  const now = DateTime.now().setZone("Asia/Seoul");
+  const date = DateTime.fromObject({
+    year: parsedData.year ?? now.year,
+    month: parsedData.month ?? now.month,
+    day: parsedData.day ?? now.day,
+  }).setZone("Asia/Seoul");
+
+  if (!date.isValid) {
+    throw data(
+      {
+        error_code: "invalid_date",
+        message: "Invalid date",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const today = DateTime.now().setZone("Asia/Seoul").startOf("day");
+  if (date > today) {
+    throw data(
+      {
+        error_code: "future_date",
+        message: "Future date",
+      },
+      { status: 400 }
+    );
+  }
+
   return {
-    year: params.year,
-    month: params.month,
-    day: params.day,
-    products: [], // Add daily leaderboard logic
+    year: date.year,
+    month: date.month,
+    day: date.day,
   };
-}
+};
 
 export default function DailyLeaderboardPage({
   loaderData,
-}: Route.ComponentProps) {
+}: {
+  loaderData: Awaited<ReturnType<typeof loader>>;
+}) {
+  const urlDate = DateTime.fromObject({
+    year: loaderData.year,
+    month: loaderData.month,
+    day: loaderData.day,
+  });
+  const previousDay = urlDate.minus({ days: 1 });
+  const nextDay = urlDate.plus({ days: 1 });
+  const isToday = urlDate.equals(DateTime.now().startOf("day"));
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">
-        Top Products of {loaderData.month}/{loaderData.day}/{loaderData.year}
-      </h1>
-      {/* Add daily leaderboard content */}
+    <div className="space-y-10">
+      <Hero
+        title={`The best products of ${urlDate.toLocaleString(
+          DateTime.DATE_MED
+        )}`}
+      />
+      <div className="flex items-center justify-center gap-2">
+        <Button variant="secondary" asChild>
+          <Link
+            to={`/products/leaderboards/daily/${previousDay.year}/${previousDay.month}/${previousDay.day}`}
+          >
+            &larr; {previousDay.toLocaleString(DateTime.DATE_SHORT)}
+          </Link>
+        </Button>
+        {!isToday ? (
+          <Button variant="secondary" asChild>
+            <Link
+              to={`/products/leaderboards/daily/${nextDay.year}/${nextDay.month}/${nextDay.day}`}
+            >
+              {nextDay.toLocaleString(DateTime.DATE_SHORT)} &rarr;
+            </Link>
+          </Button>
+        ) : null}
+      </div>
+      <div className="space-y-5 w-full max-w-screen-md mx-auto">
+        {Array.from({ length: 11 }).map((_, index) => (
+          <ProductCard
+            key={`productId-${index}`}
+            id={`productId-${index}`}
+            name="Product Name"
+            description="Product Description"
+            commentsCount={12}
+            viewsCount={12}
+            votesCount={120}
+          />
+        ))}
+      </div>
+      <ProductPagination totalPages={10} />
     </div>
   );
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        {error.data.message} / {error.data.error_code}
+      </div>
+    );
+  }
+  if (error instanceof Error) {
+    return <div>{error.message}</div>;
+  }
+  return <div>Unknown error</div>;
 }
