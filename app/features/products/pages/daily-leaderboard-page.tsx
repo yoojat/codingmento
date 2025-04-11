@@ -1,11 +1,11 @@
 import { DateTime } from "luxon";
 import { data, isRouteErrorResponse, Link } from "react-router";
 import { z } from "zod";
-import type { Route } from "./+types/leaderboard-page";
 import ProductPagination from "~/common/components/product-pagination";
 import { ProductCard } from "~/common/components/product-card";
 import { Button } from "~/common/components/ui/button";
 import { Hero } from "~/common/components/hero";
+import type { Route } from "./+types/daily-leaderboard-page";
 
 const paramsSchema = z.object({
   year: z.coerce.number().optional(),
@@ -27,11 +27,7 @@ export const loader = ({ params }: Route.LoaderArgs) => {
 
   // 현재 날짜를 기본값으로 사용
   const now = DateTime.now().setZone("Asia/Seoul");
-  const date = DateTime.fromObject({
-    year: parsedData.year ?? now.year,
-    month: parsedData.month ?? now.month,
-    day: parsedData.day ?? now.day,
-  }).setZone("Asia/Seoul");
+  const date = DateTime.fromObject(parsedData).setZone("Asia/Seoul");
 
   if (!date.isValid) {
     throw data(
