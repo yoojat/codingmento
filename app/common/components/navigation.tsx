@@ -10,8 +10,9 @@ import {
 } from "./ui/navigation-menu";
 import { Separator } from "./ui/separator";
 import { cn } from "~/lib/utils";
-
+import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -81,13 +82,21 @@ export default function Navigation({
   hasMessages: boolean;
 }) {
   return (
-    <nav className="flex px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50">
+    <nav className="flex px-4 lg:px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50">
       <div className="flex items-center">
-        <Link to="/" className="font-bold tracking-tighter text-lg">
+        <Link
+          to="/"
+          className="hidden lg:block font-bold tracking-tighter text-lg"
+        >
           Coding Mento
         </Link>
-        <Separator orientation="vertical" className="!h-6 mx-4" />
-        <NavigationMenu>
+        <Separator
+          orientation="vertical"
+          className="!h-6 mx-4 hidden lg:block"
+        />
+
+        {/* 데스크톱 네비게이션 */}
+        <NavigationMenu className="hidden lg:block">
           <NavigationMenuList>
             {menus.map((menu) => (
               <NavigationMenuItem key={menu.name}>
@@ -102,7 +111,7 @@ export default function Navigation({
                           <NavigationMenuItem
                             key={item.name}
                             className={cn([
-                              "select-none rounded-md transition-colors focus:bg-accent  hover:bg-accent",
+                              "select-none rounded-md transition-colors focus:bg-accent hover:bg-accent",
                               item.to === "/courses/python-basic" &&
                                 "col-span-2 bg-primary/10 hover:bg-primary/20 focus:bg-primary/20",
                               item.to === "/courses/python-intermeidate" &&
@@ -136,8 +145,42 @@ export default function Navigation({
             ))}
           </NavigationMenuList>
         </NavigationMenu>
+
+        {/* 모바일 햄버거 메뉴 */}
+        <Sheet>
+          <SheetTrigger asChild className="lg:hidden">
+            <Button variant="ghost" size="icon">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-[300px]">
+            <nav className="flex flex-col gap-4 mt-8 pl-5">
+              {menus.map((menu) => (
+                <div key={menu.name}>
+                  <Link to={menu.to} className="text-lg font-medium">
+                    {menu.name}
+                  </Link>
+                  {menu.items && (
+                    <div className="mt-2 ml-4 space-y-2">
+                      {menu.items.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          className="block text-sm text-muted-foreground hover:text-foreground"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+          </SheetContent>
+        </Sheet>
       </div>
 
+      {/* 로그인 상태에 따른 버튼들 */}
       {isLoggedIn ? (
         <div className="flex items-center gap-4">
           <Button size="icon" variant="ghost" asChild className="relative">
