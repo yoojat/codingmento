@@ -7,4 +7,5 @@ export default defineConfig({
   dbCredentials: {
     url: process.env.CODINGMENTO_DATABASE_URL!,
   },
+  schemaFilter: ["public"],
 });

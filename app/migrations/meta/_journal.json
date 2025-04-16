@@ -8,6 +8,48 @@
       "when": 1744733729583,
       "tag": "0000_careful_mariko_yashida",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1744797202385,
+      "tag": "0001_slimy_shaman",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1744799210759,
+      "tag": "0002_clumsy_hiroim",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1744799337006,
+      "tag": "0003_solid_silver_sable",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744799993563,
+      "tag": "0004_loving_chameleon",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1744808132368,
+      "tag": "0005_windy_silver_fox",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1744808529738,
+      "tag": "0006_cooing_wildside",
+      "breakpoints": true
     }
   ]
 }
