@@ -5,4 +5,12 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  optimizeDeps: {
+    exclude: ["type-fest"],
+  },
+  resolve: {
+    alias: {
+      "type-fest": "type-fest/source/index.js",
+    },
+  },
 });

@@ -68,7 +68,7 @@ const menus = [
   },
   {
     name: "무료체험",
-    to: "/free-trial",
+    to: "/community",
   },
 ];
 
@@ -137,7 +137,11 @@ export default function Navigation({
                     </NavigationMenuContent>
                   </>
                 ) : (
-                  <Link className={navigationMenuTriggerStyle()} to={menu.to}>
+                  <Link
+                    prefetch="intent"
+                    className={navigationMenuTriggerStyle()}
+                    to={menu.to}
+                  >
                     {menu.name}
                   </Link>
                 )}
