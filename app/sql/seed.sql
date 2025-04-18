@@ -79,7 +79,7 @@ INSERT INTO post_replies (post_id, profile_id, reply) VALUES
 (10, 'c603f0c3-0ca0-4fd8-99b3-2a528ff66815', 'Excellent roadmap planning guide.');
 
 -- Seed data for team
-INSERT INTO team (product_name, team_size, equity_split, product_stage, roles, product_description) VALUES
+INSERT INTO teams (product_name, team_size, equity_split, product_stage, roles, product_description) VALUES
 ('CodeGenius', 5, 100, 'product', '2 Developers, 1 Designer, 1 PM, 1 Marketing', 'AI-powered code review platform'),
 ('DevFlow', 3, 100, 'mvp', '1 Developer, 1 Designer, 1 PM', 'Project management for developers'),
 ('AppBuilder', 4, 100, 'prototype', '2 Developers, 1 Designer, 1 Marketing', 'No-code mobile app development'),
