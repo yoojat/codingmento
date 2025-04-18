@@ -10,6 +10,8 @@ import { IdeaCard } from "../components/idea-card";
 import { JobCard } from "../components/job-card";
 import { TeamCard } from "../components/team-card";
 
+import { getPosts } from "~/features/community/queries";
+
 export const meta: MetaFunction = () => {
   return [
     { title: "Home | wemake" },
@@ -23,7 +25,12 @@ export const loader = async () => {
     endDate: DateTime.now().endOf("day"),
     limit: 7,
   });
-  return { products };
+  const posts = await getPosts({
+    limit: 7,
+    sorting: "newest",
+  });
+
+  return { products, posts };
 };
 
 export default function HomePage({ loaderData }: Route.ComponentProps) {
