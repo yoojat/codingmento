@@ -8,31 +8,39 @@ import {
   primaryKey,
   integer,
   check,
+  foreignKey,
 } from "drizzle-orm/pg-core";
 import { profiles } from "../users/schema";
 import { sql } from "drizzle-orm";
-export const products = pgTable("products", {
-  product_id: bigint({ mode: "number" })
-    .primaryKey()
-    .generatedAlwaysAsIdentity(),
-  name: text().notNull(),
-  tagline: text().notNull(),
-  description: text().notNull(),
-  how_it_works: text().notNull(),
-  icon: text().notNull(),
-  stats: jsonb().notNull().default({ views: 0, revviews: 0, upvotes: 0 }),
-  profile_id: uuid()
-    .references(() => profiles.profile_id, {
-      onDelete: "cascade",
-    })
-    .notNull(),
-  category_id: bigint({ mode: "number" }).references(
-    () => categories.category_id,
-    { onDelete: "set null" }
-  ),
-  created_at: timestamp("created_at").notNull().defaultNow(),
-  updated_at: timestamp("updated_at").notNull().defaultNow(),
-});
+export const products = pgTable(
+  "products",
+  {
+    product_id: bigint({ mode: "number" })
+      .primaryKey()
+      .generatedAlwaysAsIdentity(),
+    name: text().notNull(),
+    tagline: text().notNull(),
+    description: text().notNull(),
+    how_it_works: text().notNull(),
+    icon: text().notNull(),
+    url: text().notNull(),
+    stats: jsonb().notNull().default({ views: 0, revviews: 0, upvotes: 0 }),
+    profile_id: uuid().notNull(),
+    category_id: bigint({ mode: "number" }).references(
+      () => categories.category_id,
+      { onDelete: "set null" }
+    ),
+    created_at: timestamp("created_at").notNull().defaultNow(),
+    updated_at: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (table) => [
+    foreignKey({
+      columns: [table.profile_id],
+      foreignColumns: [profiles.profile_id],
+      name: "products_to_profiles",
+    }).onDelete("cascade"),
+  ]
+);
 
 export const categories = pgTable("categories", {
   category_id: bigint({ mode: "number" })

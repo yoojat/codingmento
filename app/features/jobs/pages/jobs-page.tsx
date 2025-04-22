@@ -90,6 +90,7 @@ export default function JobsPage({ loaderData }: Route.ComponentProps) {
             <div className="flex flex-wrap gap-2">
               {JOB_TYPES.map((type) => (
                 <Button
+                  id={type.value}
                   variant={"outline"}
                   onClick={() => onFilterClick("type", type.value)}
                   className={cn(
@@ -108,6 +109,7 @@ export default function JobsPage({ loaderData }: Route.ComponentProps) {
             <div className="flex flex-wrap gap-2">
               {LOCATION_TYPES.map((type) => (
                 <Button
+                  id={type.value}
                   variant={"outline"}
                   onClick={() => onFilterClick("location", type.value)}
                   className={cn(
@@ -128,6 +130,7 @@ export default function JobsPage({ loaderData }: Route.ComponentProps) {
             <div className="flex flex-wrap gap-2">
               {SALARY_RANGE.map((range) => (
                 <Button
+                  id={range}
                   variant={"outline"}
                   onClick={() => onFilterClick("salary", range)}
                   className={cn(

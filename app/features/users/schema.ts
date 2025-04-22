@@ -11,6 +11,8 @@ import {
 } from "drizzle-orm/pg-core";
 import { posts } from "../community/schema";
 import { products } from "../products/schema";
+import client from "~/supa-client";
+import { productListSelect } from "../products/queries";
 
 // type 스크립트가 제대로 작동하기 위해 추가
 // 실제 데이터베이스는 supabase에서 관리
