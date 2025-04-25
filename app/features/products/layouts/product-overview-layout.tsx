@@ -64,8 +64,11 @@ export default function ProductOverviewLayout({
             variant={"secondary"}
             size="lg"
             className="text-lg h-14 px-10"
+            asChild
           >
-            Visit Website
+            <Link to={`/products/${loaderData.product.product_id}/visit`}>
+              Visit Website
+            </Link>
           </Button>
           <Button size="lg" className="text-lg h-14 px-10">
             <ChevronUpIcon className="size-4" />
