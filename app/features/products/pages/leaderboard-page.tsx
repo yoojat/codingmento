@@ -5,7 +5,7 @@ import { ProductCard } from "~/features/products/components/product-card";
 import type { Route } from "./+types/leaderboard-page";
 import { getProductsByDateRange } from "../queries";
 import { DateTime } from "luxon";
-
+import { makeSSRClient } from "~/supa-client";
 export const meta: Route.MetaFunction = () => {
   return [
     { title: "Leaderboards | wemake" },
@@ -13,25 +13,26 @@ export const meta: Route.MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { client, headers } = makeSSRClient(request);
   const [dailyProducts, weeklyProducts, monthlyProducts, yearlyProducts] =
     await Promise.all([
-      getProductsByDateRange({
+      getProductsByDateRange(client, {
         startDate: DateTime.now().startOf("day"),
         endDate: DateTime.now().endOf("day"),
         limit: 7,
       }),
-      getProductsByDateRange({
+      getProductsByDateRange(client, {
         startDate: DateTime.now().startOf("week"),
         endDate: DateTime.now().endOf("week"),
         limit: 7,
       }),
-      getProductsByDateRange({
+      getProductsByDateRange(client, {
         startDate: DateTime.now().startOf("month"),
         endDate: DateTime.now().endOf("month"),
         limit: 7,
       }),
-      getProductsByDateRange({
+      getProductsByDateRange(client, {
         startDate: DateTime.now().startOf("year"),
         endDate: DateTime.now().endOf("year"),
         limit: 7,

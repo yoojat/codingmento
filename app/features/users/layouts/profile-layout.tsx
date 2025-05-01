@@ -15,18 +15,23 @@ import {
   DialogTitle,
 } from "~/common/components/ui/dialog";
 import { Textarea } from "~/common/components/ui/textarea";
+import { cn } from "~/lib/utils";
 import type { Route } from "./+types/profile-layout";
 import { getUserProfile } from "../queries";
-import { cn } from "~/lib/utils";
+import { makeSSRClient } from "~/supa-client";
 
-export const meta: Route.MetaFunction = ({ params }) => {
-  return [{ title: `${params.username} | wemake` }];
+export const meta: Route.MetaFunction = ({ data }) => {
+  return [{ title: `${data.user.name} | wemake` }];
 };
 
 export const loader = async ({
+  request,
   params,
 }: Route.LoaderArgs & { params: { username: string } }) => {
-  const user = await getUserProfile(params.username);
+  const { client, headers } = makeSSRClient(request);
+  const user = await getUserProfile(client, {
+    username: params.username,
+  });
   return { user };
 };
 
